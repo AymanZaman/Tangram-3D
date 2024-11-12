@@ -537,9 +537,9 @@ int main(void)
 		// Render Small Triangle 
 		glBindVertexArray(VAOs[1]);
 		glUniform3f(objectColorLoc, 0.5f, 0.2f, 0.1f);
+		model = glm::mat4();
+		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::mat4();
-			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::translate(model, glm::vec3(-0.03f, 0.08f, 2.35f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
@@ -559,9 +559,9 @@ int main(void)
 		// Render Large Triangle
 		glBindVertexArray(VAOs[2]);
 		glUniform3f(objectColorLoc, 0.35f, 0.18f, 0.1f);
+		model = glm::mat4();
+		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::mat4();
-			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::translate(model, glm::vec3(-1.07f, 0.33f, 0.0f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
@@ -581,8 +581,8 @@ int main(void)
 		glBindVertexArray(VAOs[3]);
 		glUniform3f(objectColorLoc, 0.35f, 0.25f, 0.2f);
 		model = glm::mat4();
+		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
@@ -602,9 +602,8 @@ int main(void)
 		glBindVertexArray(VAOs[4]);
 		glUniform3f(objectColorLoc, 0.6f, 0.3f, 0.2f);
 		model = glm::mat4();
+		model *= rotate_transform;
 		if (transitionStarted) {
-
-			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::translate(model, glm::vec3(1.075f, 1.04f, 0.0f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
@@ -624,9 +623,9 @@ int main(void)
 		// Render Medium Triangle
 		glBindVertexArray(VAOs[5]);
 		glUniform3f(objectColorLoc, 0.3f, 0.2f, 0.15f);
+		model = glm::mat4();
+		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::mat4();
-			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::translate(model, glm::vec3(-0.03f, -1.755f, 1.35f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
@@ -645,9 +644,9 @@ int main(void)
 		// Render Parellelogram
 		glBindVertexArray(VAOs[6]);
 		glUniform3f(objectColorLoc, 0.3f, 0.2f, 0.15f);
+		model = glm::mat4();
+		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::mat4();
-			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::translate(model, glm::vec3(0.0f, -0.61f, 2.179f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
