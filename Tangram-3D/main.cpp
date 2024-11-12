@@ -171,16 +171,17 @@ int main(void)
 
 	GLfloat square[] = {
 		// Front face vertices
-		0.0f,  0.5f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 0
-		0.5f,  1.0f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 1
-		1.0f,  0.5f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 2
-		0.5f,  0.0f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 3
+		0.0f,  0.0f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 0 (y - 0.5)
+		0.5f,  0.5f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 1 (y - 0.5)
+		1.0f,  0.0f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 2 (y - 0.5)
+		0.5f, -0.5f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 3 (y - 0.5)
 		// Back face vertices
-		0.0f,  0.5f, -0.35f,   0.0f,  0.0f, -1.0f,  // 4
-		0.5f,  1.0f, -0.35f,   0.0f,  0.0f, -1.0f,  // 5
-		1.0f,  0.5f, -0.35f,   0.0f,  0.0f, -1.0f,  // 6
-		0.5f,  0.0f, -0.35f,   0.0f,  0.0f, -1.0f,  // 7
+		0.0f,  0.0f, -0.35f,   0.0f,  0.0f, -1.0f,  // 4 (y - 0.5)
+		0.5f,  0.5f, -0.35f,   0.0f,  0.0f, -1.0f,  // 5 (y - 0.5)
+		1.0f,  0.0f, -0.35f,   0.0f,  0.0f, -1.0f,  // 6 (y - 0.5)
+		0.5f, -0.5f, -0.35f,   0.0f,  0.0f, -1.0f,  // 7 (y - 0.5)
 	};
+
 
 	GLuint indices[] = {
 		// Front face
@@ -426,6 +427,17 @@ int main(void)
 	// Build and compile our shader program
 	GLuint shaderProgram = initShader("vert.glsl", "frag.glsl");
 
+	GLfloat startTime = (GLfloat)glfwGetTime();			// Start time of the program
+
+	GLfloat animationDuration = 1.0f;					// Default animation duration
+	GLfloat delayAnimationTime = 1.0f;					// Delay time between animations
+
+	bool hasTransformed = false;						// Whether the Tangram has transformed
+
+	GLfloat flipParallelogramStartTime = 1.0f;
+	bool flipParallelogram = false;						// Animation on whether parallelogram is flipped
+
+
 	GLfloat time = (GLfloat)glfwGetTime();
 	GLfloat duration = 0.4f;
 	GLfloat rotate_angle = (GLfloat)glm::radians(0.0f);
@@ -449,17 +461,12 @@ int main(void)
 	{
 		glfwPollEvents();
 
-		bool play_animation = ((GLfloat)glfwGetTime() >= animationTransitionDelay);
+		bool play_animation = /*((GLfloat)glfwGetTime() >= animationTransitionDelay) */ false;
 
 		glClearColor(0.5, 0.5, 0.5, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		GLfloat currentTime = (GLfloat)glfwGetTime();
-
-		rotate_angle = std::min((GLfloat)glfwGetTime() * 1.0f, 6.0f);
-		std::cout << rotate_angle << std::endl;
-
 		glUseProgram(shaderProgram);
+
 		GLint objectColorLoc = glGetUniformLocation(shaderProgram, "objectColor");
 		GLint lightColorLoc = glGetUniformLocation(shaderProgram, "lightColor");
 		GLint lightPosLoc = glGetUniformLocation(shaderProgram, "lightPos");
@@ -467,6 +474,20 @@ int main(void)
 		glUniform3f(lightColorLoc, 1.0f, 1.0f, 1.0f);
 		glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
 		glUniform3f(viewPosLoc, cameraPos.x, cameraPos.y, cameraPos.z);
+
+		GLfloat currentTime = (GLfloat)glfwGetTime();
+		GLfloat elapsedTime = currentTime - startTime;
+
+		bool transitionStarted = elapsedTime >= delayAnimationTime;
+		transitionStarted = false;
+		std::cout << "Start animation:" << transitionStarted << std::endl;
+
+		GLfloat animationProgress = ((GLfloat)glfwGetTime() - (startTime + delayAnimationTime)) * duration;
+		if (animationProgress > 1.0f && !hasTransformed) {
+			hasTransformed = true;
+			flipParallelogramStartTime = (GLfloat)glfwGetTime();
+		}
+
 
 		// Create camera transformations
 		glm::mat4 view;
@@ -486,23 +507,29 @@ int main(void)
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
+		// Rotation transform
+		rotate_angle = std::min((GLfloat)glfwGetTime() * 1.0f, 6.0f);
+		//rotate_angle = 45.0f;
+		glm::mat4 rotate_transform = glm::mat4();
+		rotate_transform = glm::rotate(rotate_transform, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		
 		// Render Small triangle
 		glBindVertexArray(VAOs[0]);
 		glUniform3f(objectColorLoc, 0.45f, 0.25f, 0.15f);
 		model = glm::mat4();
-		model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-0.03f, -0.34, 1.355f));
-		if (firstPhaseCompleted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-		}
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model *= rotate_transform;
+		if (transitionStarted) {
+			model = glm::translate(model, glm::vec3(-0.03f, -0.34, 1.355f));
+			if (firstPhaseCompleted) {
+				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
+			}
+			model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-		if (((GLfloat)glfwGetTime() - time) * duration <= 1.0) {
-			model = glm::mix(iden, model, (currentTime - time) * duration);
+			if (animationProgress <= 1.0) {
+				model = glm::mix(iden, model, animationProgress);
+			}
 		}
-
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 24);
 		glBindVertexArray(0);
@@ -510,19 +537,20 @@ int main(void)
 		// Render Small Triangle 
 		glBindVertexArray(VAOs[1]);
 		glUniform3f(objectColorLoc, 0.5f, 0.2f, 0.1f);
-		model = glm::mat4();
-		model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-0.03f, 0.08f, 2.35f));
-		if (firstPhaseCompleted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-		}
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(-225.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		if (transitionStarted) {
+			model = glm::mat4();
+			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::translate(model, glm::vec3(-0.03f, 0.08f, 2.35f));
+			if (firstPhaseCompleted) {
+				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
+			}
+			model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(-225.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-		if (((GLfloat)glfwGetTime() - time) * duration <= 1.0) {
-			model = glm::mix(iden, model, (currentTime - time) * duration);
+			if (animationProgress <= 1.0) {
+				model = glm::mix(iden, model, animationProgress);
+			}
 		}
-
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 24);
 		glBindVertexArray(0);
@@ -531,18 +559,19 @@ int main(void)
 		// Render Large Triangle
 		glBindVertexArray(VAOs[2]);
 		glUniform3f(objectColorLoc, 0.35f, 0.18f, 0.1f);
-		model = glm::mat4();
-		model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-1.07f, 0.33f, 0.0f));
-		if (firstPhaseCompleted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-		}
-		model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		if (transitionStarted) {
+			model = glm::mat4();
+			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::translate(model, glm::vec3(-1.07f, 0.33f, 0.0f));
+			if (firstPhaseCompleted) {
+				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
+			}
+			model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-		if (((GLfloat)glfwGetTime() - time) * duration <= 1.0) {
-			model = glm::mix(iden, model, ((GLfloat)glfwGetTime() - time) * duration);
+			if (animationProgress <= 1.0) {
+				model = glm::mix(iden, model, animationProgress);
+			}
 		}
-
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 24);
 		glBindVertexArray(0);
@@ -552,17 +581,18 @@ int main(void)
 		glBindVertexArray(VAOs[3]);
 		glUniform3f(objectColorLoc, 0.35f, 0.25f, 0.2f);
 		model = glm::mat4();
-		model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		if (firstPhaseCompleted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-		}
-		model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotates to become straight
+		if (transitionStarted) {
+			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+			if (firstPhaseCompleted) {
+				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
+			}
+			model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotates to become straight
 
-		if ((currentTime - time) * duration <= 1.0) {
-			model = glm::mix(iden, model, (currentTime - time) * duration);
+			if (animationProgress <= 1.0) {
+				model = glm::mix(iden, model, animationProgress);
+			}
 		}
-
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
@@ -571,20 +601,21 @@ int main(void)
 		// Render Large Triangle
 		glBindVertexArray(VAOs[4]);
 		glUniform3f(objectColorLoc, 0.6f, 0.3f, 0.2f);
-
 		model = glm::mat4();
-		model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(1.075f, 1.04f, 0.0f));
-		if (firstPhaseCompleted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-		}
-		model = glm::scale(model, glm::vec3(-1.0f, 1.0f, 1.0f));
-		model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		if (transitionStarted) {
 
-		if ((currentTime - time) * duration <= 1.0) {
-			model = glm::mix(iden, model, (currentTime - time) * duration);
-		}
+			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::translate(model, glm::vec3(1.075f, 1.04f, 0.0f));
+			if (firstPhaseCompleted) {
+				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
+			}
+			model = glm::scale(model, glm::vec3(-1.0f, 1.0f, 1.0f));
+			model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
+			if (animationProgress <= 1.0) {
+				model = glm::mix(iden, model, animationProgress);
+			}
+		}
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 24);
 		glBindVertexArray(0);
@@ -593,19 +624,20 @@ int main(void)
 		// Render Medium Triangle
 		glBindVertexArray(VAOs[5]);
 		glUniform3f(objectColorLoc, 0.3f, 0.2f, 0.15f);
-		model = glm::mat4();
-		model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-0.03f, -1.755f, 1.35f));
-		if (firstPhaseCompleted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-		}
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		if (transitionStarted) {
+			model = glm::mat4();
+			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::translate(model, glm::vec3(-0.03f, -1.755f, 1.35f));
+			if (firstPhaseCompleted) {
+				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
+			}
+			model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(135.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
-		if ((currentTime - time) * duration <= 1.0) {
-			model = glm::mix(iden, model, (currentTime - time) * duration);
+			if (animationProgress <= 1.0) {
+				model = glm::mix(iden, model, animationProgress);
+			}
 		}
-
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 24);
 		glBindVertexArray(0);
@@ -613,31 +645,33 @@ int main(void)
 		// Render Parellelogram
 		glBindVertexArray(VAOs[6]);
 		glUniform3f(objectColorLoc, 0.3f, 0.2f, 0.15f);
-		model = glm::mat4();
-		model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, -0.61f, 2.179f));
-		if (firstPhaseCompleted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-		}
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, -1.0f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(120.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		if (transitionStarted) {
+			model = glm::mat4();
+			model = glm::rotate(model, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::translate(model, glm::vec3(0.0f, -0.61f, 2.179f));
+			if (firstPhaseCompleted) {
+				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
+			}
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, -1.0f));
+			model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(120.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
 
-		if ((currentTime - time) * duration <= 1.0) {
-			model = glm::mix(iden, model, (currentTime - time) * duration);
+			if (animationProgress <= 1.0) {
+				model = glm::mix(iden, model, animationProgress);
+			}
+			else if (!firstPhaseCompleted) {
+				firstPhaseCompleted = true;
+				std::cout << "First animation completed" << std::endl;
+				animationStartTime = currentTime;
+				animationTransitionDelay = currentTime + 1.5f;
+			}
 		}
-		else if (!firstPhaseCompleted) {
-			firstPhaseCompleted = true;
-			std::cout << "First animation completed" << std::endl;
-			animationStartTime = currentTime;
-			animationTransitionDelay = currentTime + 1.5f;
-		}
-
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
+		/*
 		// Starts a second animation
 		if (firstPhaseCompleted && !secondPhaseCompleted && play_animation) {
 			//std::cout << "Second animation has started" << std::endl;
@@ -748,7 +782,7 @@ int main(void)
 		
 		if (should_explode && elapsedTime >= explosionDuration) {
 			secondPhaseCompleted = true;
-		}
+		}*/
 
 		glfwSwapBuffers(window);
 
