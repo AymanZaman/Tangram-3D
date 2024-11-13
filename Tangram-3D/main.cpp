@@ -349,6 +349,59 @@ int main(void)
 	};
 	// Scale from 0.25 to 0.1f
 
+	GLfloat floorVertices[] = {
+		// Positions          // Normals         // Texture Coords
+		-5.0f,  -1.0f, -5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
+		 5.0f,  -1.0f, -5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  0.0f,
+		 5.0f,  -1.0f,  5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  5.0f,
+
+		-5.0f,  -1.0f, -5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
+		 5.0f,  -1.0f,  5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  5.0f,
+		-5.0f,  -1.0f,  5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  5.0f,
+	};
+
+	GLuint textureFloor;
+	glGenTextures(1, &textureFloor);
+	glBindTexture(GL_TEXTURE_2D, textureFloor);
+
+	int width, height, nrChannels;
+	unsigned char* data = stbi_load("concrete.png", &width, &height, &nrChannels, 0);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+
+	// Texture settings
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	GLuint floorVAO, floorVBO;
+	glGenVertexArrays(1, &floorVAO);
+	glGenBuffers(1, &floorVBO);
+
+	glBindVertexArray(floorVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, floorVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(floorVertices), floorVertices, GL_STATIC_DRAW);
+
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	// Normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// Texture Coordinate attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+
+	glBindVertexArray(0);
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBOs[7], VAOs[7], EBOs[2];
@@ -516,6 +569,8 @@ int main(void)
 		GLint lightColorLoc = glGetUniformLocation(shaderProgram, "lightColor");
 		GLint lightPosLoc = glGetUniformLocation(shaderProgram, "lightPos");
 		GLint viewPosLoc = glGetUniformLocation(shaderProgram, "viewPos");
+		GLint useTextureLoc = glGetUniformLocation(shaderProgram, "useTexture");
+		GLint texture1Loc = glGetUniformLocation(shaderProgram, "texture1");
 		glUniform3f(lightColorLoc, 1.0f, 1.0f, 1.0f);
 		glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
 		glUniform3f(viewPosLoc, cameraPos.x, cameraPos.y, cameraPos.z);
@@ -557,6 +612,23 @@ int main(void)
 		glm::mat4 rotate_transform = glm::mat4();
 		rotate_transform = glm::rotate(rotate_transform, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		
+		// Create floor
+		// Set uniforms
+		glUniform3f(objectColorLoc, 1.0f, 1.0f, 1.0f); // Neutral color for textured objects
+		glUniform1i(useTextureLoc, 1); // Enable texture rendering
+
+		// Model transformation for floor
+		model = glm::mat4();
+		model *= rotate_transform;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+		glBindVertexArray(floorVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+
+		// Reset useTexture to 0 for non-textured objects
+		glUniform1i(useTextureLoc, 0);
+
 		// Render Big triangle
 		glBindVertexArray(VAOs[0]);
 		glUniform3f(objectColorLoc, 0.45f, 0.25f, 0.15f);
@@ -732,6 +804,13 @@ int main(void)
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 		
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureFloor);
+
+		// Use shader program
+		glUseProgram(shaderProgram);
+
+
 		/*
 		// Starts a second animation
 		if (firstPhaseCompleted && !secondPhaseCompleted && play_animation) {
