@@ -57,152 +57,169 @@ int main(void)
 	// Setup OpenGL options
 	glEnable(GL_DEPTH_TEST);
 
+	// First Triangle (Top)
 	GLfloat firsttriangle[] = {
-		//position              //normal vector
 		// Front triangle
-		-1.0f,  1.0f,  0.25f,  0.0f,  0.0f,  1.0f,
-		 1.0f,  1.0f,  0.25f,  0.0f,  0.0f,  1.0f,
-		 0.0f,  0.0f,  0.25f,  0.0f,  0.0f,  1.0f,
-
+		-1.0f,  1.0f,  0.25f,   0.0f,  0.0f,  1.0f,
+		 1.0f,  1.0f,  0.25f,   0.0f,  0.0f,  1.0f,
+		 0.0f,  0.0f,  0.25f,   0.0f,  0.0f,  1.0f,
 		 // Back triangle
-		 -1.0f,  1.0f, -0.25f,  0.0f,  0.0f, -1.0f,
-		  1.0f,  1.0f, -0.25f,  0.0f,  0.0f, -1.0f,
-		  0.0f,  0.0f, -0.25f,  0.0f,  0.0f, -1.0f,
-
+		 -1.0f,  1.0f, -0.25f,   0.0f,  0.0f, -1.0f,
+		  1.0f,  1.0f, -0.25f,   0.0f,  0.0f, -1.0f,
+		  0.0f,  0.0f, -0.25f,   0.0f,  0.0f, -1.0f,
 		  // Left side
-		  -1.0f,  1.0f,  0.25f, -0.894f,  0.447f,  0.0f,
-		  -1.0f,  1.0f, -0.25f, -0.894f,  0.447f,  0.0f,
-		   0.0f,  0.0f,  0.25f, -0.894f,  0.447f,  0.0f,
-
-		   0.0f,  0.0f,  0.25f, -0.894f,  0.447f,  0.0f,
-		   0.0f,  0.0f, -0.25f, -0.894f,  0.447f,  0.0f,
-		  -1.0f,  1.0f, -0.25f, -0.894f,  0.447f,  0.0f,
-
-		   0.0f,  0.0f,  0.25f,  0.894f,  0.447f,  0.0f,
-		   0.0f,  0.0f, -0.25f,  0.894f,  0.447f,  0.0f,
-		   1.0f,  1.0f,  0.25f,  0.894f,  0.447f,  0.0f,
-
-		   1.0f,  1.0f, -0.25f,  0.894f,  0.447f,  0.0f,
-		   1.0f,  1.0f,  0.25f,  0.894f,  0.447f,  0.0f,
-		   0.0f,  0.0f, -0.25f,  0.894f,  0.447f,  0.0f,
-
-		   -1.0f,  1.0f,  0.25f,  0.0f,  1.0f,  0.0f,
-		   -1.0f,  1.0f, -0.25f,  0.0f,  1.0f,  0.0f,
-			1.0f,  1.0f,  0.25f,  0.0f,  1.0f,  0.0f,
-
-			1.0f,  1.0f,  0.25f,  0.0f,  1.0f,  0.0f,
-			1.0f,  1.0f, -0.25f,  0.0f,  1.0f,  0.0f,
-		   -1.0f,  1.0f, -0.25f,  0.0f,  1.0f,  0.0f,
+		  -1.0f,  1.0f,  0.25f,  -1.0f,  0.0f,  0.0f,
+		  -1.0f,  1.0f, -0.25f,  -1.0f,  0.0f,  0.0f,
+		   0.0f,  0.0f,  0.25f,  -1.0f,  0.0f,  0.0f,
+		   0.0f,  0.0f,  0.25f,  -1.0f,  0.0f,  0.0f,
+		   0.0f,  0.0f, -0.25f,  -1.0f,  0.0f,  0.0f,
+		  -1.0f,  1.0f, -0.25f,  -1.0f,  0.0f,  0.0f,
+		  // Right side
+		   0.0f,  0.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		   0.0f,  0.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		   1.0f,  1.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		   1.0f,  1.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		   1.0f,  1.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		   0.0f,  0.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		   // Top face
+		   -1.0f,  1.0f,  0.25f,   0.0f,  1.0f,  0.0f,
+		   -1.0f,  1.0f, -0.25f,   0.0f,  1.0f,  0.0f,
+			1.0f,  1.0f,  0.25f,   0.0f,  1.0f,  0.0f,
+			1.0f,  1.0f,  0.25f,   0.0f,  1.0f,  0.0f,
+			1.0f,  1.0f, -0.25f,   0.0f,  1.0f,  0.0f,
+		   -1.0f,  1.0f, -0.25f,   0.0f,  1.0f,  0.0f
 	};
 
-
+	// Second Triangle (Left)
 	GLfloat secondtriangle[] = {
-
+		// Front face
 		-1.0f,  1.0f,  0.25f,   0.0f,  0.0f,  1.0f,
 		 0.0f,  0.0f,  0.25f,   0.0f,  0.0f,  1.0f,
 		-1.0f, -1.0f,  0.25f,   0.0f,  0.0f,  1.0f,
-
+		// Back face
 		-1.0f,  1.0f, -0.25f,   0.0f,  0.0f, -1.0f,
 		 0.0f,  0.0f, -0.25f,   0.0f,  0.0f, -1.0f,
 		-1.0f, -1.0f, -0.25f,   0.0f,  0.0f, -1.0f,
-
+		// Left edge
 		-1.0f,  1.0f,  0.25f,  -1.0f,  0.0f,  0.0f,
 		-1.0f,  1.0f, -0.25f,  -1.0f,  0.0f,  0.0f,
 		-1.0f, -1.0f,  0.25f,  -1.0f,  0.0f,  0.0f,
-
 		-1.0f, -1.0f,  0.25f,  -1.0f,  0.0f,  0.0f,
 		-1.0f, -1.0f, -0.25f,  -1.0f,  0.0f,  0.0f,
 		-1.0f,  1.0f, -0.25f,  -1.0f,  0.0f,  0.0f,
-
-
-		-1.0f,  1.0f,  0.25f,   0.894f, -0.447f,  0.0f,
-		-1.0f,  1.0f, -0.25f,   0.894f, -0.447f,  0.0f,
-		 0.0f,  0.0f,  0.25f,   0.894f, -0.447f,  0.0f,
-
-		 0.0f,  0.0f,  0.25f,   0.894f, -0.447f,  0.0f,
-		 0.0f,  0.0f, -0.25f,   0.894f, -0.447f,  0.0f,
-		-1.0f,  1.0f, -0.25f,   0.894f, -0.447f,  0.0f,
-
-		 0.0f,  0.0f,  0.25f,   0.894f,  0.447f,  0.0f,
-		 0.0f,  0.0f, -0.25f,   0.894f,  0.447f,  0.0f,
-		-1.0f, -1.0f, -0.25f,   0.894f,  0.447f,  0.0f,
-
-		-1.0f, -1.0f, -0.25f,   0.894f,  0.447f,  0.0f,
-		-1.0f, -1.0f,  0.25f,   0.894f,  0.447f,  0.0f,
-		 0.0f,  0.0f,  0.25f,   0.894f,  0.447f,  0.0f,
+		// Upper right edge
+		-1.0f,  1.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		-1.0f,  1.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		 0.0f,  0.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		 0.0f,  0.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		 0.0f,  0.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		-1.0f,  1.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		// Lower right edge
+		 0.0f,  0.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		 0.0f,  0.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		-1.0f, -1.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		-1.0f, -1.0f, -0.25f,   1.0f,  0.0f,  0.0f,
+		-1.0f, -1.0f,  0.25f,   1.0f,  0.0f,  0.0f,
+		 0.0f,  0.0f,  0.25f,   1.0f,  0.0f,  0.0f
 	};
 
+	// Third Triangle (Upper Right)
 	GLfloat thirdtriangle[] = {
-
+		// Front face
 		1.0f,  1.0f,  0.25f,    0.0f,  0.0f,  1.0f,
 		0.5f,  0.5f,  0.25f,    0.0f,  0.0f,  1.0f,
 		1.0f,  0.0f,  0.25f,    0.0f,  0.0f,  1.0f,
-
+		// Back face
 		1.0f,  1.0f, -0.25f,    0.0f,  0.0f, -1.0f,
 		0.5f,  0.5f, -0.25f,    0.0f,  0.0f, -1.0f,
 		1.0f,  0.0f, -0.25f,    0.0f,  0.0f, -1.0f,
-
+		// Right edge
 		1.0f,  1.0f,  0.25f,    1.0f,  0.0f,  0.0f,
 		1.0f,  1.0f, -0.25f,    1.0f,  0.0f,  0.0f,
 		1.0f,  0.0f,  0.25f,    1.0f,  0.0f,  0.0f,
-
 		1.0f,  0.0f,  0.25f,    1.0f,  0.0f,  0.0f,
 		1.0f,  0.0f, -0.25f,    1.0f,  0.0f,  0.0f,
 		1.0f,  1.0f, -0.25f,    1.0f,  0.0f,  0.0f,
-
-
-		1.0f,  1.0f,  0.25f,   -0.894f, -0.447f,  0.0f,
-		1.0f,  1.0f, -0.25f,   -0.894f, -0.447f,  0.0f,
-		0.5f,  0.5f,  0.25f,   -0.894f, -0.447f,  0.0f,
-
-		0.5f,  0.5f,  0.25f,   -0.894f, -0.447f,  0.0f,
-		0.5f,  0.5f, -0.25f,   -0.894f, -0.447f,  0.0f,
-		1.0f,  1.0f, -0.25f,   -0.894f, -0.447f,  0.0f,
-
-		0.5f,  0.5f,  0.25f,   -0.894f,  0.447f,  0.0f,
-		0.5f,  0.5f, -0.25f,   -0.894f,  0.447f,  0.0f,
-		1.0f,  0.0f,  0.25f,   -0.894f,  0.447f,  0.0f,
-
-		1.0f,  0.0f,  0.25f,   -0.894f,  0.447f,  0.0f,
-		1.0f,  0.0f, -0.25f,   -0.894f,  0.447f,  0.0f,
-		0.5f,  0.5f, -0.25f,   -0.894f,  0.447f,  0.0f,
+		// Upper left edge
+		1.0f,  1.0f,  0.25f,    1.0f,  0.0f,  0.0f,
+		1.0f,  1.0f, -0.25f,    1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f,  0.25f,    1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f,  0.25f,    1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f, -0.25f,    1.0f,  0.0f,  0.0f,
+		1.0f,  1.0f, -0.25f,    1.0f,  0.0f,  0.0f,
+		// Lower left edge
+		0.5f,  0.5f,  0.25f,    1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f, -0.25f,    1.0f,  0.0f,  0.0f,
+		1.0f,  0.0f,  0.25f,    1.0f,  0.0f,  0.0f,
+		1.0f,  0.0f,  0.25f,    1.0f,  0.0f,  0.0f,
+		1.0f,  0.0f, -0.25f,    1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f, -0.25f,    1.0f,  0.0f,  0.0f
 	};
 
 
 	GLfloat square[] = {
-		// Front face vertices
-		0.0f,  0.0f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 0 (y - 0.5)
-		0.5f,  0.5f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 1 (y - 0.5)
-		1.0f,  0.0f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 2 (y - 0.5)
-		0.5f, -0.5f,  0.35f,   0.0f,  0.0f,  -1.0f,  // 3 (y - 0.5)
-		// Back face vertices
-		0.0f,  0.0f, -0.35f,   0.0f,  0.0f, -1.0f,  // 4 (y - 0.5)
-		0.5f,  0.5f, -0.35f,   0.0f,  0.0f, -1.0f,  // 5 (y - 0.5)
-		1.0f,  0.0f, -0.35f,   0.0f,  0.0f, -1.0f,  // 6 (y - 0.5)
-		0.5f, -0.5f, -0.35f,   0.0f,  0.0f, -1.0f,  // 7 (y - 0.5)
+		// Front face (2 triangles)
+		// Triangle 1
+		0.0f,  0.0f,   0.25f,   0.0f,  0.0f,  1.0f,
+		0.5f,  0.5f,   0.25f,   0.0f,  0.0f,  1.0f,
+		1.0f,  0.0f,   0.25f,   0.0f,  0.0f,  1.0f,
+		// Triangle 2
+		0.0f,  0.0f,   0.25f,   0.0f,  0.0f,  1.0f,
+		1.0f,  0.0f,   0.25f,   0.0f,  0.0f,  1.0f,
+		0.5f, -0.5f,   0.25f,   0.0f,  0.0f,  1.0f,
+
+		// Back face (2 triangles)
+		// Triangle 1
+		0.0f,  0.0f,  -0.25f,   0.0f,  0.0f, -1.0f,
+		1.0f,  0.0f,  -0.25f,   0.0f,  0.0f, -1.0f,
+		0.5f,  0.5f,  -0.25f,   0.0f,  0.0f, -1.0f,
+		// Triangle 2
+		0.0f,  0.0f,  -0.25f,   0.0f,  0.0f, -1.0f,
+		0.5f, -0.5f,  -0.25f,   0.0f,  0.0f, -1.0f,
+		1.0f,  0.0f,  -0.25f,   0.0f,  0.0f, -1.0f,
+
+		// Top edge face (2 triangles)
+		// Triangle 1
+		0.5f,  0.5f,   0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		1.0f,  0.0f,   0.25f,   1.0f,  0.0f,  0.0f,
+		// Triangle 2
+		1.0f,  0.0f,   0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		1.0f,  0.0f,  -0.25f,   1.0f,  0.0f,  0.0f,
+
+		// Bottom edge face (2 triangles)
+		// Triangle 1
+		0.0f,  0.0f,   0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f, -0.5f,   0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f, -0.5f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		// Triangle 2
+		0.0f,  0.0f,   0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f, -0.5f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		0.0f,  0.0f,  -0.25f,   1.0f,  0.0f,  0.0f,
+
+		// Left edge face (2 triangles)
+		// Triangle 1
+		0.0f,  0.0f,   0.25f,   1.0f,  0.0f,  0.0f,
+		0.0f,  0.0f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f,   0.25f,   1.0f,  0.0f,  0.0f,
+		// Triangle 2
+		0.5f,  0.5f,   0.25f,   1.0f,  0.0f,  0.0f,
+		0.0f,  0.0f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f,  -0.25f,   1.0f,  0.0f,  0.0f,
+
+		// Right edge face (2 triangles)
+		// Triangle 1
+		1.0f,  0.0f,   0.25f,   1.0f,  0.0f,  0.0f,
+		1.0f,  0.0f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f, -0.5f,   0.25f,   1.0f,  0.0f,  0.0f,
+		// Triangle 2
+		0.5f, -0.5f,   0.25f,   1.0f,  0.0f,  0.0f,
+		1.0f,  0.0f,  -0.25f,   1.0f,  0.0f,  0.0f,
+		0.5f, -0.5f,  -0.25f,   1.0f,  0.0f,  0.0f
 	};
 
-
-	GLuint indices[] = {
-		// Front face
-		0, 1, 2,
-		0, 2, 3,
-		// Back face
-		4, 6, 5,
-		4, 7, 6,
-		// Top edge face
-		1, 5, 2,
-		2, 5, 6,
-		// Bottom edge face
-		0, 3, 7,
-		0, 7, 4,
-		// Left edge face
-		0, 4, 1,
-		1, 4, 5,
-		// Right edge face
-		2, 6, 3,
-		3, 6, 7
-	};
+	// TODO Scale from -0.25 to -0.35 for Back VErtices
 
 
 	GLfloat fourthtriangle[]{
@@ -277,44 +294,56 @@ int main(void)
 		1.0f, -1.0f, -0.25f,    0.0f, -1.0f, 0.0f
 	};
 
-	GLfloat parallelogram[]{
+	GLfloat parallelogram[] = {
 		// Front face
-		-1.0f, -1.0f, 0.1f,     0.0f, 0.0f, -1.0f,   // 0
-		0.5f, -0.5f, 0.1f,      0.0f, 0.0f, -1.0f,   // 1
-		-0.5f, -0.5f, 0.1f,     0.0f, 0.0f, -1.0f,   // 2
-		0.0f, -1.0f, 0.1f,      0.0f, 0.0f, -1.0f,   // 3
-		// Back face
-		-1.0f, -1.0f, -0.1f,    0.0f, 0.0f, -1.0f,  // 4
-		0.5f, -0.5f, -0.1f,     0.0f, 0.0f, -1.0f,  // 5
-		-0.5f, -0.5f, -0.1f,    0.0f, 0.0f, -1.0f,  // 6
-		0.0f, -1.0f, -0.1f,     0.0f, 0.0f, -1.0f   // 7
+		-1.0f, -1.0f,  0.25f,    0.0f, 0.0f,  1.0f,
+		-0.5f, -0.5f,  0.25f,    0.0f, 0.0f,  1.0f,
+		 0.5f, -0.5f,  0.25f,    0.0f, 0.0f,  1.0f,
+		-1.0f, -1.0f,  0.25f,    0.0f, 0.0f,  1.0f,
+		 0.5f, -0.5f,  0.25f,    0.0f, 0.0f,  1.0f,
+		 0.0f, -1.0f,  0.25f,    0.0f, 0.0f,  1.0f,
+
+		 // Back face
+		 -1.0f, -1.0f, -0.25f,    0.0f, 0.0f, -1.0f,
+		  0.0f, -1.0f, -0.25f,    0.0f, 0.0f, -1.0f,
+		  0.5f, -0.5f, -0.25f,    0.0f, 0.0f, -1.0f,
+		 -1.0f, -1.0f, -0.25f,    0.0f, 0.0f, -1.0f,
+		  0.5f, -0.5f, -0.25f,    0.0f, 0.0f, -1.0f,
+		 -0.5f, -0.5f, -0.25f,    0.0f, 0.0f, -1.0f,
+
+		 // Top edge
+		 -0.5f, -0.5f,  0.25f,    0.0f, 1.0f, 0.0f,
+		  0.5f, -0.5f,  0.25f,    0.0f, 1.0f, 0.0f,
+		  0.5f, -0.5f, -0.25f,    0.0f, 1.0f, 0.0f,
+		 -0.5f, -0.5f,  0.25f,    0.0f, 1.0f, 0.0f,
+		  0.5f, -0.5f, -0.25f,    0.0f, 1.0f, 0.0f,
+		 -0.5f, -0.5f, -0.25f,    0.0f, 1.0f, 0.0f,
+
+
+		 -1.0f, -1.0f,  0.25f,    0.0f, -1.0f, 0.0f,
+		  0.0f, -1.0f,  0.25f,    0.0f, -1.0f, 0.0f,
+		  0.0f, -1.0f, -0.25f,    0.0f, -1.0f, 0.0f,
+		 -1.0f, -1.0f,  0.25f,    0.0f, -1.0f, 0.0f,
+		  0.0f, -1.0f, -0.25f,    0.0f, -1.0f, 0.0f,
+		 -1.0f, -1.0f, -0.25f,    0.0f, -1.0f, 0.0f,
+
+
+		  0.5f, -0.5f,  0.25f,    0.0f, -1.0f, 0.0f,
+		  0.0f, -1.0f,  0.25f,    0.0f, -1.0f, 0.0f,
+		  0.0f, -1.0f, -0.25f,    0.0f, -1.0f, 0.0f,
+		  0.5f, -0.5f,  0.25f,    0.0f, -1.0f, 0.0f,
+		  0.0f, -1.0f, -0.25f,    0.0f, -1.0f, 0.0f,
+		  0.5f, -0.5f, -0.25f,    0.0f, -1.0f, 0.0f,
+
+		  // Left slant
+		  -1.0f, -1.0f,  0.25f,    -1.0f, 0.0f, 0.0f,
+		  -0.5f, -0.5f,  0.25f,    -1.0f, 0.0f, 0.0f,
+		  -0.5f, -0.5f, -0.25f,    -1.0f, 0.0f, 0.0f,
+		  -1.0f, -1.0f,  0.25f,    -1.0f, 0.0f, 0.0f,
+		  -0.5f, -0.5f, -0.25f,    -1.0f, 0.0f, 0.0f,
+		  -1.0f, -1.0f, -0.25f,    -1.0f, 0.0f, 0.0f
 	};
-
-	GLuint indices2[] = {
-		// Front face
-		2, 1, 3,
-		2, 0, 3,
-
-		// Back face
-		6, 7, 5,
-		6, 7, 4,
-
-		// Top edge face
-		1, 2, 6,
-		1, 6, 5,
-
-		// Bottom edge face
-		0, 3, 7,
-		0, 7, 4,
-
-		// Right slanted face
-		1, 5, 7,
-		1, 7, 3,
-
-		// Left slanted face
-		2, 6, 4,
-		2, 4, 0
-	};
+	// Scale from 0.25 to 0.1f
 
 
 	// First, set the container's VAO (and VBO)
@@ -368,8 +397,14 @@ int main(void)
 	glBindVertexArray(VAOs[3]);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOs[3]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(square), square, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[0]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+	// Normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(0);
+
 
 	// Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
@@ -393,7 +428,7 @@ int main(void)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
 	glBindVertexArray(0);
-
+	 
 
 	//fifth triangle 
 	glBindBuffer(GL_ARRAY_BUFFER, VBOs[5]);
@@ -412,8 +447,14 @@ int main(void)
 	glBindVertexArray(VAOs[6]);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOs[6]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(parallelogram), parallelogram, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices2), indices2, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+	// Normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(0);
+
 
 	// Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
@@ -430,7 +471,7 @@ int main(void)
 	GLfloat startTime = (GLfloat)glfwGetTime();			// Start time of the program
 
 	GLfloat animationDuration = 1.0f;					// Default animation duration
-	GLfloat delayAnimationTime = 1.0f;					// Delay time between animations
+	GLfloat delayAnimationTime = 1.5f;					// Delay time between animations
 
 	bool hasTransformed = false;						// Whether the Tangram has transformed
 
@@ -461,7 +502,7 @@ int main(void)
 	{
 		glfwPollEvents();
 
-		bool play_animation = /*((GLfloat)glfwGetTime() >= animationTransitionDelay) */ false;
+		bool play_animation = /*((GLfloat)glfwGetTime() >= animationTransitionDelay) */false;
 
 		glClearColor(0.5, 0.5, 0.5, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -479,10 +520,8 @@ int main(void)
 		GLfloat elapsedTime = currentTime - startTime;
 
 		bool transitionStarted = elapsedTime >= delayAnimationTime;
-		transitionStarted = false;
-		std::cout << "Start animation:" << transitionStarted << std::endl;
-
-		GLfloat animationProgress = ((GLfloat)glfwGetTime() - (startTime + delayAnimationTime)) * duration;
+	/*	std::cout << "ELapsed time: " << elapsedTime << std::endl;*/
+		GLfloat animationProgress = (currentTime - (startTime + delayAnimationTime)) * duration;
 		if (animationProgress > 1.0f && !hasTransformed) {
 			hasTransformed = true;
 			flipParallelogramStartTime = (GLfloat)glfwGetTime();
@@ -508,12 +547,13 @@ int main(void)
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// Rotation transform
-		rotate_angle = std::min((GLfloat)glfwGetTime() * 1.0f, 6.0f);
-		//rotate_angle = 45.0f;
+		rotate_angle = std::min((GLfloat)glfwGetTime() * 1.0f, 15.0f);
+		//rotate_angle = 30.0f;
+		std::cout << "ELapsed time: " << rotate_angle << std::endl;
 		glm::mat4 rotate_transform = glm::mat4();
 		rotate_transform = glm::rotate(rotate_transform, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		
-		// Render Small triangle
+		// Render Big triangle
 		glBindVertexArray(VAOs[0]);
 		glUniform3f(objectColorLoc, 0.45f, 0.25f, 0.15f);
 		model = glm::mat4();
@@ -534,7 +574,7 @@ int main(void)
 		glDrawArrays(GL_TRIANGLES, 0, 24);
 		glBindVertexArray(0);
 
-		// Render Small Triangle 
+		// Render Big Triangle 
 		glBindVertexArray(VAOs[1]);
 		glUniform3f(objectColorLoc, 0.5f, 0.2f, 0.1f);
 		model = glm::mat4();
@@ -556,13 +596,13 @@ int main(void)
 		glBindVertexArray(0);
 		
 
-		// Render Large Triangle
+		// Render Right Ear Triangle
 		glBindVertexArray(VAOs[2]);
 		glUniform3f(objectColorLoc, 0.35f, 0.18f, 0.1f);
 		model = glm::mat4();
 		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::translate(model, glm::vec3(-1.07f, 0.33f, 0.0f));
+			model = glm::translate(model, glm::vec3(-1.10f, 0.33f, 0.0f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
 			}
@@ -583,7 +623,9 @@ int main(void)
 		model = glm::mat4();
 		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(1.15, 1.0, 1.35));
+			model = glm::translate(model, glm::vec3(-0.35f, 0.5f, 0.01f));
+			
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
 			}
@@ -594,17 +636,17 @@ int main(void)
 			}
 		}
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
 
-		// Render Large Triangle
+		// Render Left Triangle
 		glBindVertexArray(VAOs[4]);
 		glUniform3f(objectColorLoc, 0.6f, 0.3f, 0.2f);
 		model = glm::mat4();
 		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::translate(model, glm::vec3(1.075f, 1.04f, 0.0f));
+			model = glm::translate(model, glm::vec3(1.12f, 1.04f, 0.0f));
 			if (firstPhaseCompleted) {
 				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
 			}
@@ -643,33 +685,49 @@ int main(void)
 		
 		// Render Parellelogram
 		glBindVertexArray(VAOs[6]);
-		glUniform3f(objectColorLoc, 0.3f, 0.2f, 0.15f);
+		glUniform3f(objectColorLoc, 0.5f, 0.35f, 0.15f);
 		model = glm::mat4();
 		model *= rotate_transform;
 		if (transitionStarted) {
-			model = glm::translate(model, glm::vec3(0.0f, -0.61f, 2.179f));
-			if (firstPhaseCompleted) {
-				model = glm::translate(model, glm::vec3(0.0f, 0.0f, -(currentTime - animationStartTime) * 0.75));
-			}
-			model = glm::scale(model, glm::vec3(1.0f, 1.0f, -1.0f));
+			model = glm::scale(model, glm::vec3(1.0f, -1.0f, 1.0f)); // Flip in Y axis parallelogram upwards
+			model = glm::scale(model, glm::vec3(0.65f, 0.65f, 1.0f)); // Shrink Parallelogram to be smaller width
+			model = glm::translate(model, glm::vec3(-0.05f, -0.78f, 2.17f));
+
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, -1.0f)); // FLip in Z axis
+
 			model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::rotate(model, glm::radians(120.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
 
 			if (animationProgress <= 1.0) {
 				model = glm::mix(iden, model, animationProgress);
 			}
-			else if (!firstPhaseCompleted) {
-				firstPhaseCompleted = true;
-				std::cout << "First animation completed" << std::endl;
-				animationStartTime = currentTime;
-				animationTransitionDelay = currentTime + 1.5f;
+
+
+			if (hasTransformed) {
+				glm::mat4 secondTransform = model;
+				secondTransform = glm::scale(secondTransform, glm::vec3(-1.0f, 1.0f, 1.0f));
+				secondTransform = glm::rotate(secondTransform, glm::radians(50.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+				// Y, Z, X
+				secondTransform = glm::translate(secondTransform, glm::vec3(-1.162f, 0.5625f, 0.0f));
+
+				GLfloat t = (currentTime - flipParallelogramStartTime) / duration;
+				if (t > 1.0f) { // Prevent continiously increasing
+					t = 1.0f;
+					if (!flipParallelogram) {
+						flipParallelogram = true;
+						//scaleDownStartTime = (GLfloat)glfwGetTime() + delayAnimationTime; // Add a delay to allow time to see the final shape
+					}
+				}
+				if (t <= 1.0f) {
+					model = glm::mix(model, secondTransform, t);
+				}
 			}
 		}
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
-
+		
 		/*
 		// Starts a second animation
 		if (firstPhaseCompleted && !secondPhaseCompleted && play_animation) {
