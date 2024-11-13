@@ -42,5 +42,11 @@
     <Image Include="concrete.png">
       <Filter>Source Files</Filter>
     </Image>
+    <Image Include="red_velvet.png">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="red_velvet.jpg">
+      <Filter>Source Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 // Code adapted from www.learnopengl.com, www.glfw.org
 
 #include <iostream>
+#include <cstdlib>
+#include <vector>
 
 // GLEW
 #define GLEW_STATIC
@@ -381,32 +383,90 @@ int main(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	GLuint floorVAO, floorVBO;
-	glGenVertexArrays(1, &floorVAO);
-	glGenBuffers(1, &floorVBO);
+	GLuint textureWall;
+	glGenTextures(1, &textureWall);
+	glBindTexture(GL_TEXTURE_2D, textureWall);
 
-	glBindVertexArray(floorVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, floorVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(floorVertices), floorVertices, GL_STATIC_DRAW);
+	width, height, nrChannels;
+	data = stbi_load("red_velvet.jpg", &width, &height, &nrChannels, 0);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
 
-	// Position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
+	// Texture settings
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	// Normal attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
+	// MINI CUBOID SECTION
+	GLfloat smallCuboid[] = {
+		// Positions          // Normals           // Texture Coords
+		// Front face
+		-0.075f,  0.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  1.0f,
+		 0.075f,  0.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  1.0f,
+		 0.075f,  0.15f, -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  0.0f,
 
-	// Texture Coordinate attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(2);
+		-0.075f,  0.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  1.0f,
+		 0.075f,  0.15f, -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  0.0f,
+		-0.075f,  0.15f, -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  0.0f,
 
-	glBindVertexArray(0);
+		// Back face
+		-0.075f,  0.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  1.0f,
+		 0.075f,  0.15f, -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  0.0f,
+		 0.075f,  0.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  1.0f,
+
+		-0.075f,  0.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  1.0f,
+		-0.075f,  0.15f, -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  0.0f,
+		 0.075f,  0.15f, -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  0.0f,
+
+		 // Left face
+		 -0.075f,  0.0f,  -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		 -0.075f,  0.0f,  -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  1.0f,
+		 -0.075f,  0.15f, -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+
+		 -0.075f,  0.0f,  -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		 -0.075f,  0.15f, -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+		 -0.075f,  0.15f, -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  0.0f,
+
+		 // Right face
+		  0.075f,  0.0f,  -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		  0.075f,  0.15f, -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+		  0.075f,  0.0f,  -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  1.0f,
+
+		  0.075f,  0.0f,  -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		  0.075f,  0.15f, -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  0.0f,
+		  0.075f,  0.15f, -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+
+		  // Top face
+		  -0.075f,  0.15f, -3.15f,  0.0f,  1.0f,  0.0f,   0.0f,  1.0f,
+		   0.075f,  0.15f, -3.0f,   0.0f,  1.0f,  0.0f,   1.0f,  0.0f,
+		   0.075f,  0.15f, -3.15f,  0.0f,  1.0f,  0.0f,   1.0f,  1.0f,
+
+		  -0.075f,  0.15f, -3.15f,  0.0f,  1.0f,  0.0f,   0.0f,  1.0f,
+		  -0.075f,  0.15f, -3.0f,   0.0f,  1.0f,  0.0f,   0.0f,  0.0f,
+		   0.075f,  0.15f, -3.0f,   0.0f,  1.0f,  0.0f,   1.0f,  0.0f,
+
+		   // Bottom face
+		   -0.075f,  0.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   0.0f,  1.0f,
+			0.075f,  0.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   1.0f,  0.0f,
+			0.075f,  0.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   1.0f,  1.0f,
+
+		   -0.075f,  0.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   0.0f,  1.0f,
+		   -0.075f,  0.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   0.0f,  0.0f,
+			0.075f,  0.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   1.0f,  0.0f,
+	};
+
 
 	// First, set the container's VAO (and VBO)
-	GLuint VBOs[7], VAOs[7], EBOs[2];
-	glGenVertexArrays(7, VAOs); // the address-of operator (&) is not needed here, as the array name is a pointer type
-	glGenBuffers(7, VBOs);
+	GLuint VBOs[9], VAOs[9], EBOs[2];
+	glGenVertexArrays(8, VAOs); // the address-of operator (&) is not needed here, as the array name is a pointer type
+	glGenBuffers(8, VBOs);
 	glGenBuffers(2, EBOs);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
@@ -511,8 +571,6 @@ int main(void)
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
-
-
 	// Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
@@ -521,6 +579,46 @@ int main(void)
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
+
+	// Floor setup
+	glBindVertexArray(VAOs[7]);
+	glBindBuffer(GL_ARRAY_BUFFER, VAOs[7]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(floorVertices), floorVertices, GL_STATIC_DRAW);
+
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	// Normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// Texture coordinate attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+	glBindVertexArray(0);
+
+	//  Cuboid setup
+	glBindVertexArray(VAOs[8]);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBOs[8]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(smallCuboid), smallCuboid, GL_STATIC_DRAW);
+
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	// Normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// Texture coordinate attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+
+	glBindVertexArray(0);
+
+
 
 	// Build and compile our shader program
 	GLuint shaderProgram = initShader("vert.glsl", "frag.glsl");
@@ -548,11 +646,41 @@ int main(void)
 	bool secondPhaseCompleted = false;
 	bool thirdPhaseCompleted = false;
 
+	// Explosion affect
+	// Explosion-related variables
+	bool explode = false;                // Explosion trigger
+	float explosionStartTime = 0.0f;     // Time when the explosion starts
+	float explosionDuration = 2.0f;      // Total duration for the explosion
+	int stackHeight = 10;                // Number of stacked cuboids
+	int horizontalCount = 5;             // Number of cuboids to the left and right
+	int totalCuboids = (2 * horizontalCount + 1) * stackHeight;
+
+	// Spacing for cuboids
+	float verticalSpacing = 0.15f;      // Vertical spacing between cuboids
+	float horizontalSpacing = 0.15f;    // Horizontal spacing between cuboids
+
+	// Randomized velocities and rotations for explosion
+	std::vector<glm::vec3> explosionVelocities(totalCuboids);
+	std::vector<glm::vec3> explosionRotations(totalCuboids);
+
+	// Initialise random values
+	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed for randomness
+	for (int idx = 0; idx < totalCuboids; idx++) {
+		explosionVelocities[idx] = glm::vec3(
+			((std::rand() % 200) - 100) / 200.0f,  // Random X velocity
+			((std::rand() % 200) - 100) / 200.0f,  // Random Y velocity
+			-((std::rand() % 100) + 50) / 100.0f   // Strong bias toward -Z direction
+		);
+		explosionRotations[idx] = glm::vec3(
+			((std::rand() % 200) - 100) / 100.0f,  // Random X rotation
+			((std::rand() % 200) - 100) / 100.0f,  // Random Y rotation
+			((std::rand() % 200) - 100) / 100.0f   // Random Z rotation
+		);
+	}
+
 	GLfloat explosionFactor = -1.0f;
 	bool should_explode = false;
 
-	GLfloat explosionStartTime = 0.0f;
-	GLfloat explosionDuration = 1.0f;
 
 	// Game loop
 	while (!glfwWindowShouldClose(window))
@@ -622,12 +750,77 @@ int main(void)
 		model *= rotate_transform;
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-		glBindVertexArray(floorVAO);
+		glBindVertexArray(VAOs[7]);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 
 		// Reset useTexture to 0 for non-textured objects
 		glUniform1i(useTextureLoc, 0);
+
+
+		// MIni Cuboids
+		/// Trigger explosion after 3 seconds
+		if (currentTime >= 6.0f && !explode) {
+			explode = true;
+			explosionStartTime = currentTime;
+		}
+
+		for (int i = 0; i < stackHeight; i++) {
+			for (int j = -horizontalCount; j <= horizontalCount; j++) {
+				int idx = (i * (2 * horizontalCount + 1)) + (j + horizontalCount); // Unique index for each cuboid
+
+				glBindVertexArray(cuboidVAO);
+
+				// Bind the texture
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, textureWall);
+				glUniform1i(glGetUniformLocation(shaderProgram, "useTexture"), 1);
+				glUniform3f(objectColorLoc, 1.0f, 0.0f, 0.0f);
+				// Base transformations
+				glm::mat4 model = glm::mat4();
+				model *= rotate_transform;
+				glm::vec3 basePosition = glm::vec3(j * horizontalSpacing, i * verticalSpacing - 0.5f, 0.0f);
+
+				// Explosion logic
+				if (explode) {
+					float elapsedTime = currentTime - explosionStartTime;
+					if (elapsedTime < explosionDuration) {
+						float progress = elapsedTime / explosionDuration;
+
+						// Apply explosion offset and rotation
+						glm::vec3 explosionOffset = explosionVelocities[idx] * progress;
+						glm::vec3 rotationAngles = explosionRotations[idx] * progress * glm::radians(360.0f);
+
+						model = glm::translate(model, basePosition + explosionOffset); // Explosion position
+						model = glm::rotate(model, rotationAngles.x, glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate X
+						model = glm::rotate(model, rotationAngles.y, glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate Y
+						model = glm::rotate(model, rotationAngles.z, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate Z
+					}
+					else {
+						// Stop updating after explosion duration
+						model = glm::translate(model, basePosition + explosionVelocities[idx]);
+						glm::vec3 finalRotation = glm::radians(360.0f) * explosionRotations[idx];
+						model = glm::rotate(model, finalRotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+						model = glm::rotate(model, finalRotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+						model = glm::rotate(model, finalRotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+					}
+				}
+				else {
+					// Default stacked position
+					model = glm::translate(model, basePosition);
+				}
+
+				// Pass the model matrix to the shader
+				glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+				// Draw the cuboid (36 vertices for 12 triangles)
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+
+				glBindVertexArray(0);
+			}
+		}
+		// Reset useTexture for non-textured objects
+		glUniform1i(glGetUniformLocation(shaderProgram, "useTexture"), 0);
 
 		// Render Big triangle
 		glBindVertexArray(VAOs[0]);

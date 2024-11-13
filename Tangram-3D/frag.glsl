@@ -3,15 +3,15 @@ out vec4 color;
 
 in vec3 FragPos;  
 in vec3 Normal;
-in vec2 TexCoords; // Add texture coordinates
+in vec2 TexCoords;
 
 uniform vec3 lightPos; 
 uniform vec3 viewPos;
 uniform vec3 lightColor;
-uniform vec3 objectColor;
+uniform vec3 objectColor; // Use this as the overlay color
 
-uniform sampler2D texture1; // Texture sampler for texture support
-uniform bool useTexture;    // Boolean to toggle texture usage
+uniform sampler2D texture1; // Texture sampler
+uniform bool useTexture;    // Toggle for texture usage
 
 void main()
 {
@@ -33,11 +33,15 @@ void main()
     vec3 specular = specularStrength * spec * lightColor;
 
     // Combine lighting components
-    vec3 lighting = (ambient + diffuse + specular) * objectColor;
+    vec3 lighting = (ambient + diffuse + specular);
 
-    // Apply texture if enabled
-    vec3 texColor = texture(texture1, TexCoords).rgb; // Fetch texture color
-    vec3 finalColor = useTexture ? (lighting * texColor) : lighting; // Blend texture with lighting
+    // Fetch texture color
+    vec3 texColor = texture(texture1, TexCoords).rgb;
 
-    color = vec4(finalColor, 1.0f); // Output final color
+    vec3 blendedColor = texColor * lighting;
+    vec3 finalColor = useTexture 
+        ? mix(blendedColor, blendedColor * objectColor, 0.75) 
+        : lighting * objectColor;
+
+    color = vec4(finalColor, 1.0f); // Output the final color
 }
