@@ -9,6 +9,10 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
+// Image loading
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 // GLM Mathematics
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
