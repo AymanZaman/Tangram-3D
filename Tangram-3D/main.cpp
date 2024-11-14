@@ -353,13 +353,13 @@ int main(void)
 
 	GLfloat floorVertices[] = {
 		// Positions          // Normals         // Texture Coords
-		-5.0f,  -1.0f, -5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
-		 5.0f,  -1.0f, -5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  0.0f,
-		 5.0f,  -1.0f,  5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  5.0f,
+		-5.0f,  -1.3f, -5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
+		 5.0f,  -1.3f, -5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  0.0f,
+		 5.0f,  -1.3f,  5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  5.0f,
 
-		-5.0f,  -1.0f, -5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
-		 5.0f,  -1.0f,  5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  5.0f,
-		-5.0f,  -1.0f,  5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  5.0f,
+		-5.0f,  -1.3f, -5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  0.0f,
+		 5.0f,  -1.3f,  5.0f,  0.0f, 1.0f, 0.0f,  5.0f,  5.0f,
+		-5.0f,  -1.3f,  5.0f,  0.0f, 1.0f, 0.0f,  0.0f,  5.0f,
 	};
 
 	GLuint textureFloor;
@@ -408,59 +408,60 @@ int main(void)
 	GLfloat smallCuboid[] = {
 		// Positions          // Normals           // Texture Coords
 		// Front face
-		-0.075f,  0.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  1.0f,
-		 0.075f,  0.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  1.0f,
-		 0.075f,  0.15f, -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  0.0f,
+		-0.075f, -3.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  1.0f,
+		 0.075f, -3.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  1.0f,
+		 0.075f, -2.85f, -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  0.0f,
 
-		-0.075f,  0.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  1.0f,
-		 0.075f,  0.15f, -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  0.0f,
-		-0.075f,  0.15f, -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  0.0f,
+		-0.075f, -3.0f,  -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  1.0f,
+		 0.075f, -2.85f, -3.0f,   0.0f,  0.0f,  1.0f,   1.0f,  0.0f,
+		-0.075f, -2.85f, -3.0f,   0.0f,  0.0f,  1.0f,   0.0f,  0.0f,
 
 		// Back face
-		-0.075f,  0.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  1.0f,
-		 0.075f,  0.15f, -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  0.0f,
-		 0.075f,  0.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  1.0f,
+		-0.075f, -3.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  1.0f,
+		 0.075f, -2.85f, -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  0.0f,
+		 0.075f, -3.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  1.0f,
 
-		-0.075f,  0.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  1.0f,
-		-0.075f,  0.15f, -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  0.0f,
-		 0.075f,  0.15f, -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  0.0f,
+		-0.075f, -3.0f,  -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  1.0f,
+		-0.075f, -2.85f, -3.15f,  0.0f,  0.0f, -1.0f,   0.0f,  0.0f,
+		 0.075f, -2.85f, -3.15f,  0.0f,  0.0f, -1.0f,   1.0f,  0.0f,
 
 		 // Left face
-		 -0.075f,  0.0f,  -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
-		 -0.075f,  0.0f,  -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  1.0f,
-		 -0.075f,  0.15f, -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+		 -0.075f, -3.0f,  -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		 -0.075f, -3.0f,  -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  1.0f,
+		 -0.075f, -2.85f, -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
 
-		 -0.075f,  0.0f,  -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
-		 -0.075f,  0.15f, -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
-		 -0.075f,  0.15f, -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  0.0f,
+		 -0.075f, -3.0f,  -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		 -0.075f, -2.85f, -3.0f,  -1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+		 -0.075f, -2.85f, -3.15f, -1.0f,  0.0f,  0.0f,   0.0f,  0.0f,
 
 		 // Right face
-		  0.075f,  0.0f,  -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
-		  0.075f,  0.15f, -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
-		  0.075f,  0.0f,  -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  1.0f,
+		  0.075f, -3.0f,  -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		  0.075f, -2.85f, -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+		  0.075f, -3.0f,  -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  1.0f,
 
-		  0.075f,  0.0f,  -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
-		  0.075f,  0.15f, -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  0.0f,
-		  0.075f,  0.15f, -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
+		  0.075f, -3.0f,  -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  1.0f,
+		  0.075f, -2.85f, -3.15f,  1.0f,  0.0f,  0.0f,   0.0f,  0.0f,
+		  0.075f, -2.85f, -3.0f,   1.0f,  0.0f,  0.0f,   1.0f,  0.0f,
 
 		  // Top face
-		  -0.075f,  0.15f, -3.15f,  0.0f,  1.0f,  0.0f,   0.0f,  1.0f,
-		   0.075f,  0.15f, -3.0f,   0.0f,  1.0f,  0.0f,   1.0f,  0.0f,
-		   0.075f,  0.15f, -3.15f,  0.0f,  1.0f,  0.0f,   1.0f,  1.0f,
+		  -0.075f, -2.85f, -3.15f,  0.0f,  1.0f,  0.0f,   0.0f,  1.0f,
+		   0.075f, -2.85f, -3.0f,   0.0f,  1.0f,  0.0f,   1.0f,  0.0f,
+		   0.075f, -2.85f, -3.15f,  0.0f,  1.0f,  0.0f,   1.0f,  1.0f,
 
-		  -0.075f,  0.15f, -3.15f,  0.0f,  1.0f,  0.0f,   0.0f,  1.0f,
-		  -0.075f,  0.15f, -3.0f,   0.0f,  1.0f,  0.0f,   0.0f,  0.0f,
-		   0.075f,  0.15f, -3.0f,   0.0f,  1.0f,  0.0f,   1.0f,  0.0f,
+		  -0.075f, -2.85f, -3.15f,  0.0f,  1.0f,  0.0f,   0.0f,  1.0f,
+		  -0.075f, -2.85f, -3.0f,   0.0f,  1.0f,  0.0f,   0.0f,  0.0f,
+		   0.075f, -2.85f, -3.0f,   0.0f,  1.0f,  0.0f,   1.0f,  0.0f,
 
 		   // Bottom face
-		   -0.075f,  0.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   0.0f,  1.0f,
-			0.075f,  0.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   1.0f,  0.0f,
-			0.075f,  0.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   1.0f,  1.0f,
+		   -0.075f, -3.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   0.0f,  1.0f,
+			0.075f, -3.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   1.0f,  0.0f,
+			0.075f, -3.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   1.0f,  1.0f,
 
-		   -0.075f,  0.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   0.0f,  1.0f,
-		   -0.075f,  0.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   0.0f,  0.0f,
-			0.075f,  0.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   1.0f,  0.0f,
+		   -0.075f, -3.0f,  -3.15f,  0.0f, -1.0f,  0.0f,   0.0f,  1.0f,
+		   -0.075f, -3.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   0.0f,  0.0f,
+			0.075f, -3.0f,  -3.0f,   0.0f, -1.0f,  0.0f,   1.0f,  0.0f,
 	};
+
 
 
 	// First, set the container's VAO (and VBO)
@@ -618,8 +619,6 @@ int main(void)
 
 	glBindVertexArray(0);
 
-
-
 	// Build and compile our shader program
 	GLuint shaderProgram = initShader("vert.glsl", "frag.glsl");
 
@@ -633,6 +632,23 @@ int main(void)
 	GLfloat flipParallelogramStartTime = 1.0f;
 	bool flipParallelogram = false;						// Animation on whether parallelogram is flipped
 
+	GLfloat scaleDuration = 1.0f;		// Duration on how long it takes to scale downwards smoothly
+	GLfloat scaleDownStartTime = 0.0f;  // Start time on scaling starting
+	bool scalingComplete = false;	    // Scaling transition completed
+
+	GLfloat wallUpwardsStartTime = 1.0f;
+	GLfloat wallUpwards= 1.0f; // Begin to appear wall from negative axis
+	GLfloat wallUpwardsDuration = 2.8f; // Finish moving
+	bool wallComplete = false;		// Once wall is complete
+
+	// Rotate Head Downwards (including Ears)
+	GLfloat rotateStartTime = 1.0f;
+	bool rotateHeadComplete = false;
+
+	// Move forward towards wall
+	GLfloat chargeForwardStartTime = 1.0f;
+	GLfloat chargeDuration = 2.8f;
+	bool chargeComplete = false;
 
 	GLfloat time = (GLfloat)glfwGetTime();
 	GLfloat duration = 0.4f;
@@ -642,12 +658,11 @@ int main(void)
 	// Animations
 	GLfloat animationStartTime = (GLfloat)glfwGetTime() + 1.5f;
 	GLfloat animationTransitionDelay = (GLfloat)glfwGetTime();
-	bool firstPhaseCompleted = false;
+	bool firstPhaseCompletedfalse;
 	bool secondPhaseCompleted = false;
 	bool thirdPhaseCompleted = false;
 
 	// Explosion affect
-	// Explosion-related variables
 	bool explode = false;                // Explosion trigger
 	float explosionStartTime = 0.0f;     // Time when the explosion starts
 	float explosionDuration = 2.0f;      // Total duration for the explosion
@@ -714,6 +729,76 @@ int main(void)
 			flipParallelogramStartTime = (GLfloat)glfwGetTime();
 		}
 
+		// Global Transform (apply to all shapes)
+		glm::mat4 globalTransform = glm::mat4();
+
+		// Start scaling down once the parellelogram has been flipped and the delay is over
+		GLfloat scaleElapsedTime = currentTime - scaleDownStartTime;
+		if (flipParallelogram && scaleElapsedTime >= 0) {
+			GLfloat duration = scaleElapsedTime / scaleDuration;
+			if (duration > 1.0f) {
+				duration = 1.0f;
+				if (!scalingComplete) {
+					scalingComplete = true;
+					std::cout << "Scale complete: " << scaleElapsedTime << std::endl;
+					wallUpwardsStartTime = (GLfloat)glfwGetTime() + delayAnimationTime;
+				}
+			}
+			float smoothScaling = glm::mix(1.0f, 0.5f, duration);
+			glm::vec3 smoothTranslation = glm::mix(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.3f, -1.2f, 0.0f), duration);
+
+			globalTransform = glm::scale(globalTransform, glm::vec3(smoothScaling, smoothScaling, 1.0f));
+			globalTransform = glm::translate(globalTransform, smoothTranslation);
+		}
+
+		GLfloat wallElapsedTime = currentTime - wallUpwardsStartTime;
+		glm::mat4 globalWallTransform = glm::mat4();
+		if (scalingComplete && wallElapsedTime >= 0) {
+			glm::mat4 wallTransform = globalWallTransform;
+			wallTransform = glm::translate(wallTransform, glm::vec3(0.0f, 2.2f, 0.0f));
+			GLfloat duration = wallElapsedTime / wallUpwardsDuration;
+			if (duration > 1.0f) { // Prevent continiously increasing
+				duration = 1.0f;
+				if (!wallComplete) {
+					wallComplete = true;
+					std::cout << "Wall move complete: " << scaleElapsedTime << std::endl;
+					rotateStartTime = (GLfloat)glfwGetTime() + delayAnimationTime;
+				}
+			}
+
+			// Apply cubic easing to smooth out the transition
+			GLfloat easedDuration = duration * duration * (3.0f - 2.0f * duration);
+
+			if (duration <= 1.0f) {
+				globalWallTransform = glm::mix(globalWallTransform, wallTransform, easedDuration);
+			}
+		}
+
+		glm::mat4 rotateHeadTransform = glm::mat4();
+		//glm::mat4 rotateEarsTransform = glm::mat4();
+		//glm::mat4 leftEarTransform = glm::mat4();
+		//glm::mat4 rightEarTransform = glm::mat4();
+		GLfloat rotateElapsedTime = currentTime - rotateStartTime;
+		if (wallComplete && rotateElapsedTime >= 0) {
+			GLfloat duration = rotateElapsedTime / animationDuration;
+			if (duration > 1.0f) { // Prevent continiously increasing
+				duration = 1.0f;
+				if (!rotateHeadComplete) {
+					rotateHeadComplete = true;
+					chargeForwardStartTime = (GLfloat)glfwGetTime();
+				}
+			}
+
+			float smoothAngle = glm::mix(0.0f, glm::radians(-25.0f), duration);
+			rotateHeadTransform = glm::rotate(glm::mat4(1.0f), smoothAngle, glm::vec3(1.0f, 0.0f, 0.0f));
+
+			glm::mat4 targetTransform = rotateHeadTransform;
+			targetTransform = glm::translate(targetTransform, glm::vec3(0.0f, -0.225f, 0.425f));
+
+			if (duration <= 1.0f) {
+				rotateHeadTransform = glm::mix(rotateHeadTransform, targetTransform, duration);
+			}
+		}
 
 		// Create camera transformations
 		glm::mat4 view;
@@ -734,9 +819,9 @@ int main(void)
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// Rotation transform
-		rotate_angle = std::min((GLfloat)glfwGetTime() * 1.0f, 15.0f);
+		rotate_angle = std::min((GLfloat)glfwGetTime() * 1.0f, 18.0f);
 		//rotate_angle = 30.0f;
-		std::cout << "ELapsed time: " << rotate_angle << std::endl;
+		//std::cout << "ELapsed time: " << rotate_angle << std::endl;
 		glm::mat4 rotate_transform = glm::mat4();
 		rotate_transform = glm::rotate(rotate_transform, rotate_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		
@@ -760,16 +845,16 @@ int main(void)
 
 		// MIni Cuboids
 		/// Trigger explosion after 3 seconds
-		if (currentTime >= 6.0f && !explode) {
+	/*	if (currentTime >= 20.0f && !explode) {
 			explode = true;
 			explosionStartTime = currentTime;
-		}
+		}*/
 
 		for (int i = 0; i < stackHeight; i++) {
 			for (int j = -horizontalCount; j <= horizontalCount; j++) {
 				int idx = (i * (2 * horizontalCount + 1)) + (j + horizontalCount); // Unique index for each cuboid
 
-				glBindVertexArray(cuboidVAO);
+				glBindVertexArray(VAOs[8]);
 
 				// Bind the texture
 				glActiveTexture(GL_TEXTURE0);
@@ -779,6 +864,7 @@ int main(void)
 				// Base transformations
 				glm::mat4 model = glm::mat4();
 				model *= rotate_transform;
+				model *= globalWallTransform;
 				glm::vec3 basePosition = glm::vec3(j * horizontalSpacing, i * verticalSpacing - 0.5f, 0.0f);
 
 				// Explosion logic
@@ -826,6 +912,7 @@ int main(void)
 		glBindVertexArray(VAOs[0]);
 		glUniform3f(objectColorLoc, 0.45f, 0.25f, 0.15f);
 		model = glm::mat4();
+		model *= globalTransform;
 		model *= rotate_transform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-0.03f, -0.34, 1.355f));
@@ -847,6 +934,7 @@ int main(void)
 		glBindVertexArray(VAOs[1]);
 		glUniform3f(objectColorLoc, 0.5f, 0.2f, 0.1f);
 		model = glm::mat4();
+		model *= globalTransform;
 		model *= rotate_transform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-0.03f, 0.08f, 2.35f));
@@ -866,10 +954,13 @@ int main(void)
 		
 
 		// Render Right Ear Triangle
+
 		glBindVertexArray(VAOs[2]);
 		glUniform3f(objectColorLoc, 0.35f, 0.18f, 0.1f);
 		model = glm::mat4();
+		model *= globalTransform;
 		model *= rotate_transform;
+		model *= rotateHeadTransform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-1.10f, 0.33f, 0.0f));
 			if (firstPhaseCompleted) {
@@ -890,7 +981,9 @@ int main(void)
 		glBindVertexArray(VAOs[3]);
 		glUniform3f(objectColorLoc, 0.35f, 0.25f, 0.2f);
 		model = glm::mat4();
+		model *= globalTransform;
 		model *= rotate_transform;
+		model *= rotateHeadTransform;
 		if (transitionStarted) {
 			model = glm::scale(model, glm::vec3(1.15, 1.0, 1.35));
 			model = glm::translate(model, glm::vec3(-0.35f, 0.5f, 0.01f));
@@ -913,7 +1006,9 @@ int main(void)
 		glBindVertexArray(VAOs[4]);
 		glUniform3f(objectColorLoc, 0.6f, 0.3f, 0.2f);
 		model = glm::mat4();
+		model *= globalTransform;
 		model *= rotate_transform;
+		model *= rotateHeadTransform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(1.12f, 1.04f, 0.0f));
 			if (firstPhaseCompleted) {
@@ -935,6 +1030,7 @@ int main(void)
 		glBindVertexArray(VAOs[5]);
 		glUniform3f(objectColorLoc, 0.3f, 0.2f, 0.15f);
 		model = glm::mat4();
+		model *= globalTransform;
 		model *= rotate_transform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-0.03f, -1.755f, 1.35f));
@@ -956,6 +1052,7 @@ int main(void)
 		glBindVertexArray(VAOs[6]);
 		glUniform3f(objectColorLoc, 0.5f, 0.35f, 0.15f);
 		model = glm::mat4();
+		model *= globalTransform;
 		model *= rotate_transform;
 		if (transitionStarted) {
 			model = glm::scale(model, glm::vec3(1.0f, -1.0f, 1.0f)); // Flip in Y axis parallelogram upwards
@@ -985,7 +1082,7 @@ int main(void)
 					t = 1.0f;
 					if (!flipParallelogram) {
 						flipParallelogram = true;
-						//scaleDownStartTime = (GLfloat)glfwGetTime() + delayAnimationTime; // Add a delay to allow time to see the final shape
+						scaleDownStartTime = (GLfloat)glfwGetTime() + delayAnimationTime; // Add a delay to allow time to see the final shape
 					}
 				}
 				if (t <= 1.0f) {
