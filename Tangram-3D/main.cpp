@@ -647,7 +647,7 @@ int main(void)
 
 	// Move forward towards wall
 	GLfloat chargeForwardStartTime = 1.0f;
-	GLfloat chargeDuration = 2.8f;
+	GLfloat chargeDuration = 4.5f;
 	bool chargeComplete = false;
 
 	GLfloat time = (GLfloat)glfwGetTime();
@@ -658,7 +658,7 @@ int main(void)
 	// Animations
 	GLfloat animationStartTime = (GLfloat)glfwGetTime() + 1.5f;
 	GLfloat animationTransitionDelay = (GLfloat)glfwGetTime();
-	bool firstPhaseCompletedfalse;
+	bool firstPhaseCompleted = false;
 	bool secondPhaseCompleted = false;
 	bool thirdPhaseCompleted = false;
 
@@ -745,9 +745,9 @@ int main(void)
 				}
 			}
 			float smoothScaling = glm::mix(1.0f, 0.5f, duration);
-			glm::vec3 smoothTranslation = glm::mix(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.3f, -1.2f, 0.0f), duration);
+			glm::vec3 smoothTranslation = glm::mix(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.2f, 0.0f), duration);
 
-			globalTransform = glm::scale(globalTransform, glm::vec3(smoothScaling, smoothScaling, 1.0f));
+			globalTransform = glm::scale(globalTransform, glm::vec3(smoothScaling, smoothScaling, smoothScaling));
 			globalTransform = glm::translate(globalTransform, smoothTranslation);
 		}
 
@@ -797,6 +797,28 @@ int main(void)
 
 			if (duration <= 1.0f) {
 				rotateHeadTransform = glm::mix(rotateHeadTransform, targetTransform, duration);
+			}
+		}
+
+		GLfloat chargeElapsedTime = currentTime - chargeForwardStartTime;
+		if (rotateHeadComplete && chargeElapsedTime >= 0) {
+			glm::mat4 moveTransform = globalTransform;
+			moveTransform = glm::translate(moveTransform, glm::vec3(0.0f, 0.0f, -5.8f));
+			GLfloat duration = chargeElapsedTime / chargeDuration;
+			if (duration > 1.0f) { // Prevent continiously increasing
+				duration = 1.0f;
+				if (!chargeComplete) {
+					chargeComplete = true;
+					explosionStartTime = (GLfloat)glfwGetTime();
+					explode = true;
+				}
+			}
+
+			// Apply cubic easing to smooth out the transition
+			GLfloat easedDuration = duration * duration * (3.0f - 2.0f * duration);
+
+			if (duration <= 1.0f) {
+				globalTransform = glm::mix(globalTransform, moveTransform, easedDuration);
 			}
 		}
 
@@ -912,8 +934,8 @@ int main(void)
 		glBindVertexArray(VAOs[0]);
 		glUniform3f(objectColorLoc, 0.45f, 0.25f, 0.15f);
 		model = glm::mat4();
-		model *= globalTransform;
 		model *= rotate_transform;
+		model *= globalTransform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-0.03f, -0.34, 1.355f));
 			if (firstPhaseCompleted) {
@@ -934,8 +956,8 @@ int main(void)
 		glBindVertexArray(VAOs[1]);
 		glUniform3f(objectColorLoc, 0.5f, 0.2f, 0.1f);
 		model = glm::mat4();
-		model *= globalTransform;
 		model *= rotate_transform;
+		model *= globalTransform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-0.03f, 0.08f, 2.35f));
 			if (firstPhaseCompleted) {
@@ -958,8 +980,8 @@ int main(void)
 		glBindVertexArray(VAOs[2]);
 		glUniform3f(objectColorLoc, 0.35f, 0.18f, 0.1f);
 		model = glm::mat4();
-		model *= globalTransform;
 		model *= rotate_transform;
+		model *= globalTransform;
 		model *= rotateHeadTransform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-1.10f, 0.33f, 0.0f));
@@ -981,8 +1003,8 @@ int main(void)
 		glBindVertexArray(VAOs[3]);
 		glUniform3f(objectColorLoc, 0.35f, 0.25f, 0.2f);
 		model = glm::mat4();
-		model *= globalTransform;
 		model *= rotate_transform;
+		model *= globalTransform;
 		model *= rotateHeadTransform;
 		if (transitionStarted) {
 			model = glm::scale(model, glm::vec3(1.15, 1.0, 1.35));
@@ -1006,8 +1028,8 @@ int main(void)
 		glBindVertexArray(VAOs[4]);
 		glUniform3f(objectColorLoc, 0.6f, 0.3f, 0.2f);
 		model = glm::mat4();
-		model *= globalTransform;
 		model *= rotate_transform;
+		model *= globalTransform;
 		model *= rotateHeadTransform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(1.12f, 1.04f, 0.0f));
@@ -1030,8 +1052,8 @@ int main(void)
 		glBindVertexArray(VAOs[5]);
 		glUniform3f(objectColorLoc, 0.3f, 0.2f, 0.15f);
 		model = glm::mat4();
-		model *= globalTransform;
 		model *= rotate_transform;
+		model *= globalTransform;
 		if (transitionStarted) {
 			model = glm::translate(model, glm::vec3(-0.03f, -1.755f, 1.35f));
 			if (firstPhaseCompleted) {
@@ -1052,8 +1074,8 @@ int main(void)
 		glBindVertexArray(VAOs[6]);
 		glUniform3f(objectColorLoc, 0.5f, 0.35f, 0.15f);
 		model = glm::mat4();
-		model *= globalTransform;
 		model *= rotate_transform;
+		model *= globalTransform;
 		if (transitionStarted) {
 			model = glm::scale(model, glm::vec3(1.0f, -1.0f, 1.0f)); // Flip in Y axis parallelogram upwards
 			model = glm::scale(model, glm::vec3(0.65f, 0.65f, 1.0f)); // Shrink Parallelogram to be smaller width
